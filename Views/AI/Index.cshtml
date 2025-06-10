@@ -1,0 +1,22 @@
+@{
+    ViewBag.Title = "AI Assistant";
+}
+
+<h2>AI Assistant for Inventory</h2>
+
+<form method="post" action="/AI/AskAI">
+    <div class="form-group">
+        <label for="prompt">Ask a question about your inventory:</label>
+        <textarea name="prompt" id="prompt" class="form-control" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Ask AI</button>
+</form>
+
+@if (ViewBag.AIResponse != null)
+{
+    <hr />
+    <h4>User Prompt:</h4>
+    <p>@ViewBag.UserQuestion</p>
+    <h4>AI Response:</h4>
+    <p>@ViewBag.AIResponse</p>
+}

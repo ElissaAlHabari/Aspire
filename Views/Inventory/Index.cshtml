@@ -1,0 +1,99 @@
+@model List<InventoryManagement.Models.Inventory>
+@using InventoryManagement.Models;
+@{  Layout = null;}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory Management</title>
+</head>
+
+<body>
+    <form method="get">
+        <input type="text" name="search" placeholder="Search inventories here..." />
+        <button type="submit">Search</button>
+    </form>
+
+    <form method="get" action="/Inventory/Index">
+        <select name="status">
+            <option value="">All Status</option>
+            @foreach (var stat in Enum.GetValues(typeof(InventoryStatus)))
+            {
+                <option value="@stat">@stat</option>
+            }
+        </select>
+        <select name="category">
+            <option value="">All Categories</option>
+            @foreach (var category in Model.Select(x => x.Category).Distinct())
+            {
+                <option value="@category">@category</option>
+            }
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <h1>Add Inventory:</h1>
+    <form method="post" action="/Inventory/Add" >
+        <input type="text" name="Name" placeholder="Enter name" required  />
+        <input type="text" name="Category" placeholder="Enter category" required />
+        <input type="number" name="Quantity" placeholder="Enter quantity" required />
+        <input type="number" name="Price" placeholder="Enter price" step="0.01" required />
+
+        <select name="status">
+            @foreach (var stat in Enum.GetValues(typeof(InventoryStatus)))
+            {
+                <option value="@stat">@stat</option>
+            }
+        </select>
+        <button type="submit">Add</button>
+    </form>
+
+    <h1>Inventories Table:</h1>
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; text-align: left;">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var inv in Model)
+        {
+            <tr style="background-color:navajowhite; border-bottom: 1px solid #ccc;">
+                <td style="padding: 10px;">@inv.Name</td>
+                <td style="padding: 10px;">@inv.Category</td>
+
+                <td style="padding: 10px;">@inv.Quantity</td>
+
+                <td style="padding: 10px;">@inv.Price </td>
+
+
+
+                <td style="padding: 10px;">@inv.Status </td>
+
+                <td style="padding: 10px;">
+
+                    <a href="/Inventory/Edit/@inv.Id" >Edit</a>
+                    <a href="/Inventory/Delete/@inv.Id">Delete</a>
+                </td>
+
+            </tr>
+
+        }
+    </table>
+
+    <a href="@Url.Action("Index", "AI")" style="
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;">Ask AI</a>
+
+    
+
+</body>
+</html>

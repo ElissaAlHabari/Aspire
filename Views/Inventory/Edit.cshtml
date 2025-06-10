@@ -1,0 +1,11 @@
+@model InventoryManagement.Models.Inventory
+@using (Html.BeginForm())
+{
+    <label> Name: @Html.TextBoxFor(inv => inv.Name)</label>
+    <label> Category: @Html.TextBoxFor(inv => inv.Category)</label>
+    <label> Quantity: @Html.TextBoxFor(inv => inv.Quantity, new {@type ="number"})</label>
+    <label> Price: @Html.TextBoxFor(inv => inv.Price, new { @type = "number" })</label>
+    <label> Status @Html.DropDownListFor(inv => inv.Status, new SelectList(Enum.GetValues(typeof(InventoryManagement.Models.InventoryStatus))))</label>
+
+    <button type="submit">Save Edits</button>
+}
